@@ -1,0 +1,266 @@
+@import '../../../../styles/abstracts/variables';
+@import '../../../../styles/abstracts/mixins';
+
+.progress {
+  width: 100%;
+  
+  // Label section
+  .progress-label {
+    @include flex-between;
+    margin-bottom: $space-2;
+    
+    .progress-text {
+      @include body($text-sm, $font-medium);
+      color: var(--color-text-primary);
+    }
+    
+    .progress-value {
+      @include body($text-sm, $font-medium);
+      color: var(--color-primary);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+  
+  // Progress track
+  .progress-track {
+    width: 100%;
+    background: var(--color-surface-alt);
+    border-radius: $radius-full;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  // Progress fill
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent-cyan));
+    border-radius: $radius-full;
+    transition: width 0.3s $ease-out;
+    position: relative;
+    min-width: 2px; // Minimum width for visibility
+    
+    // Shimmer effect
+    .progress-shimmer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      animation: shimmer 2s infinite;
+    }
+  }
+  
+  // Description
+  .progress-description {
+    @include body($text-xs, $font-normal);
+    color: var(--color-text-muted);
+    margin-top: $space-1;
+  }
+  
+  // Variants
+  &--default {
+    .progress-fill {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent-cyan));
+    }
+  }
+  
+  &--gradient {
+    .progress-fill {
+      background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent-cyan),
+        var(--color-accent-emerald)
+      );
+    }
+  }
+  
+  &--striped {
+    .progress-track {
+      background: repeating-linear-gradient(
+        45deg,
+        var(--color-surface-alt),
+        var(--color-surface-alt) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    }
+    
+    .progress-fill {
+      background: var(--color-primary);
+    }
+    
+    &.progress--animated .progress-fill {
+      background-size: 32px 32px;
+      animation: stripes 1s linear infinite;
+    }
+  }
+  
+  // Sizes
+  &--sm {
+    .progress-track {
+      height: 4px;
+    }
+    
+    .progress-label {
+      .progress-text,
+      .progress-value {
+        font-size: $text-xs;
+      }
+    }
+  }
+  
+  &--md {
+    .progress-track {
+      height: 8px;
+    }
+  }
+  
+  &--lg {
+    .progress-track {
+      height: 12px;
+    }
+    
+    .progress-label {
+      .progress-text,
+      .progress-value {
+        font-size: $text-base;
+      }
+    }
+  }
+  
+  // Custom color support
+  &--custom-color {
+    .progress-fill {
+      background: var(--progress-color, var(--color-primary));
+    }
+  }
+  
+  // Animated variant
+  &--animated {
+    .progress-fill {
+      position: relative;
+      overflow: hidden;
+    }
+  }
+}
+
+// Animations
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 32px 0;
+  }
+}
+
+// Accessibility improvements
+.progress-fill[role="progressbar"] {
+  // Screen reader support
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    .progress-fill {
+      transition: none;
+    }
+    
+    .progress-shimmer {
+      animation: none;
+      display: none;
+    }
+    
+    &--striped.progress--animated .progress-fill {
+      animation: none;
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .progress {
+    .progress-track {
+      border: 1px solid var(--color-text-primary);
+    }
+    
+    .progress-fill {
+      background: var(--color-text-primary);
+    }
+  }
+}
+
+// Dark theme specific adjustments
+[data-theme="dark"] {
+  .progress {
+    .progress-track {
+      background: var(--color-surface-alt);
+    }
+    
+    .progress-shimmer {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .progress {
+    .progress-track {
+      background: #e5e5e5 !important;
+      border: 1px solid #000;
+    }
+    
+    .progress-fill {
+      background: #000 !important;
+      
+      .progress-shimmer {
+        display: none;
+      }
+    }
+    
+    .progress-label {
+      .progress-text,
+      .progress-value {
+        color: #000 !important;
+      }
+    }
+  }
+}
+
+// RTL support
+[dir="rtl"] {
+  .progress {
+    .progress-shimmer {
+      animation-direction: reverse;
+    }
+    
+    &--striped.progress--animated .progress-fill {
+      animation-direction: reverse;
+    }
+  }
+}

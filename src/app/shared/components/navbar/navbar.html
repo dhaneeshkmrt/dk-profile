@@ -1,0 +1,89 @@
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo / Brand -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center space-x-2 group">
+          <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-cyan rounded-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300">
+            <span class="text-white font-bold text-lg">DK</span>
+          </div>
+          <div class="hidden sm:block">
+            <h1 class="text-lg font-bold text-gray-900 dark:text-white">Dhaneesh Kumar</h1>
+            <p class="text-xs text-gray-600 dark:text-gray-400 -mt-1">Senior Technical Lead</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        @for (item of navItems(); track item.label) {
+          <a 
+            [href]="item.path" 
+            class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium text-sm"
+            [attr.aria-label]="item.label"
+          >
+            {{ item.label }}
+          </a>
+        }
+      </div>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center space-x-4">
+        <!-- Theme Toggle - Coming Soon -->
+        
+        <!-- Resume Download Button -->
+        <a 
+          href="/assets/resume/dhaneesh-kumar-resume.pdf" 
+          download
+          class="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors duration-300"
+        >
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Resume
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button 
+          (click)="toggleMobileMenu()"
+          class="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+          [attr.aria-expanded]="isMobileMenuOpen()"
+          aria-label="Toggle navigation menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            @if (!isMobileMenuOpen()) {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            } @else {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            }
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    @if (isMobileMenuOpen()) {
+      <div class="md:hidden border-t border-gray-200 dark:border-gray-700 animate-slide-up">
+        <div class="py-4 space-y-2">
+          @for (item of navItems(); track item.label) {
+            <a 
+              [href]="item.path" 
+              (click)="closeMobileMenu()"
+              class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium"
+            >
+              {{ item.label }}
+            </a>
+          }
+          <!-- Mobile Resume Button -->
+          <a 
+            href="/assets/resume/dhaneesh-kumar-resume.pdf" 
+            download
+            class="block mx-4 mt-4 text-center px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors duration-300"
+          >
+            Download Resume
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</nav>

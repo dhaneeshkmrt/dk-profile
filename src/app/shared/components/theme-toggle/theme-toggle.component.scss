@@ -1,0 +1,115 @@
+@import '../../../../styles/abstracts/variables';
+@import '../../../../styles/abstracts/mixins';
+
+.theme-toggle {
+  @include flex-center;
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all $duration-normal $ease-in-out;
+  padding: 0;
+  outline: none;
+  
+  &:hover {
+    background: var(--color-surface-alt);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  &.dark {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    
+    .toggle-thumb {
+      transform: translateX(30px);
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:hover {
+      background: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+    }
+  }
+}
+
+.toggle-thumb {
+  @include flex-center;
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background: white;
+  border-radius: $radius-full;
+  left: 2px;
+  transition: all $duration-normal $ease-in-out;
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+}
+
+.icon {
+  @include flex-center;
+  position: absolute;
+  font-size: 14px;
+  transition: opacity $duration-normal $ease-in-out;
+  color: var(--color-text-muted);
+  
+  &.icon-sun {
+    color: #f59e0b; // Warm sun color
+  }
+  
+  &.icon-moon {
+    color: #6366f1; // Cool moon color
+  }
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+// Animation for smooth icon transitions
+@keyframes iconSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+.theme-toggle:hover .icon {
+  animation: iconSpin 0.3s ease-in-out;
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .toggle-thumb,
+  .icon {
+    transition: none;
+  }
+  
+  .theme-toggle:hover .icon {
+    animation: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .theme-toggle {
+    border: 2px solid;
+    
+    &:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 3px;
+    }
+  }
+}

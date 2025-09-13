@@ -1,0 +1,291 @@
+// Typography Styles
+// Heading and text styles following the design system
+
+// =============================================================================
+// FONT LOADING
+// =============================================================================
+
+// Inter font from Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+// =============================================================================
+// HEADINGS
+// =============================================================================
+
+h1, .h1 {
+  @include heading($text-5xl, $font-bold);
+  margin-bottom: $space-6;
+  
+  @include max-tablet {
+    font-size: $text-4xl;
+  }
+  
+  @include max-mobile {
+    font-size: $text-3xl;
+  }
+}
+
+h2, .h2 {
+  @include heading($text-4xl, $font-bold);
+  margin-bottom: $space-5;
+  
+  @include max-tablet {
+    font-size: $text-3xl;
+  }
+  
+  @include max-mobile {
+    font-size: $text-2xl;
+  }
+}
+
+h3, .h3 {
+  @include heading($text-3xl, $font-semibold);
+  margin-bottom: $space-4;
+  
+  @include max-tablet {
+    font-size: $text-2xl;
+  }
+  
+  @include max-mobile {
+    font-size: $text-xl;
+  }
+}
+
+h4, .h4 {
+  @include heading($text-2xl, $font-semibold);
+  margin-bottom: $space-4;
+  
+  @include max-mobile {
+    font-size: $text-lg;
+  }
+}
+
+h5, .h5 {
+  @include heading($text-xl, $font-semibold);
+  margin-bottom: $space-3;
+  
+  @include max-mobile {
+    font-size: $text-base;
+  }
+}
+
+h6, .h6 {
+  @include heading($text-lg, $font-semibold);
+  margin-bottom: $space-3;
+  
+  @include max-mobile {
+    font-size: $text-sm;
+  }
+}
+
+// =============================================================================
+// BODY TEXT
+// =============================================================================
+
+p, .body {
+  @include body($text-base, $font-normal);
+  margin-bottom: $space-4;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.lead {
+  @include body($text-lg, $font-normal);
+  margin-bottom: $space-6;
+  color: var(--color-text-primary);
+}
+
+.small {
+  @include body($text-sm, $font-normal);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+// =============================================================================
+// LINKS
+// =============================================================================
+
+a {
+  color: var(--color-primary);
+  transition: color $duration-normal $ease-in-out;
+  
+  &:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: $radius-sm;
+  }
+}
+
+.link-muted {
+  color: var(--color-text-muted);
+  
+  &:hover {
+    color: var(--color-text-primary);
+  }
+}
+
+// =============================================================================
+// CODE & PREFORMATTED TEXT
+// =============================================================================
+
+code {
+  font-family: $font-mono;
+  font-size: 0.875em;
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
+  padding: 0.125rem 0.25rem;
+  border-radius: $radius-sm;
+  border: 1px solid var(--color-border);
+}
+
+pre {
+  font-family: $font-mono;
+  font-size: $text-sm;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  padding: $space-4;
+  border-radius: $radius-lg;
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+  line-height: $leading-relaxed;
+  
+  code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
+}
+
+// =============================================================================
+// LISTS
+// =============================================================================
+
+ul, ol {
+  padding-left: $space-6;
+  margin-bottom: $space-4;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  @include body($text-base, $font-normal);
+  margin-bottom: $space-2;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// =============================================================================
+// BLOCKQUOTES
+// =============================================================================
+
+blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: $space-4;
+  margin: $space-6 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  
+  p {
+    margin-bottom: $space-2;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  cite {
+    display: block;
+    margin-top: $space-2;
+    font-size: $text-sm;
+    color: var(--color-text-muted);
+    font-style: normal;
+    
+    &::before {
+      content: '— ';
+    }
+  }
+}
+
+// =============================================================================
+// UTILITY CLASSES
+// =============================================================================
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+.font-light { font-weight: $font-light; }
+.font-normal { font-weight: $font-normal; }
+.font-medium { font-weight: $font-medium; }
+.font-semibold { font-weight: $font-semibold; }
+.font-bold { font-weight: $font-bold; }
+.font-extrabold { font-weight: $font-extrabold; }
+
+.text-xs { font-size: $text-xs; }
+.text-sm { font-size: $text-sm; }
+.text-base { font-size: $text-base; }
+.text-lg { font-size: $text-lg; }
+.text-xl { font-size: $text-xl; }
+.text-2xl { font-size: $text-2xl; }
+.text-3xl { font-size: $text-3xl; }
+.text-4xl { font-size: $text-4xl; }
+.text-5xl { font-size: $text-5xl; }
+.text-6xl { font-size: $text-6xl; }
+
+.leading-tight { line-height: $leading-tight; }
+.leading-normal { line-height: $leading-normal; }
+.leading-relaxed { line-height: $leading-relaxed; }
+
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+.italic { font-style: italic; }
+.not-italic { font-style: normal; }
+
+.underline { text-decoration: underline; }
+.no-underline { text-decoration: none; }
+
+.truncate { @include truncate; }
+
+// Gradient text effect
+.text-gradient {
+  @include text-gradient;
+}
+
+.text-gradient-primary {
+  @include text-gradient(var(--color-primary), var(--color-accent-cyan));
+}
+
+// Responsive text sizes
+.text-responsive {
+  font-size: clamp(1rem, 4vw, 2rem);
+}
+
+.hero-text-responsive {
+  font-size: clamp(2rem, 8vw, 4rem);
+}

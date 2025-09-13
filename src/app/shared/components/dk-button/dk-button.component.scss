@@ -1,0 +1,208 @@
+@import '../../../../styles/abstracts/variables';
+@import '../../../../styles/abstracts/mixins';
+
+.btn {
+  @include button-base;
+  position: relative;
+  
+  // Base state
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  // Variants
+  &--primary {
+    @include button-primary;
+  }
+  
+  &--secondary {
+    @include button-secondary;
+  }
+  
+  &--ghost {
+    @include button-ghost;
+  }
+  
+  // Sizes
+  &--sm {
+    padding: $space-2 $space-4;
+    font-size: $text-sm;
+    height: 32px;
+  }
+  
+  &--md {
+    padding: $space-3 $space-6;
+    font-size: $text-sm;
+    height: 40px;
+  }
+  
+  &--lg {
+    padding: $space-4 $space-8;
+    font-size: $text-base;
+    height: 48px;
+  }
+  
+  // States
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+  
+  &--loading {
+    cursor: wait;
+    
+    .btn-content {
+      opacity: 0.7;
+    }
+  }
+  
+  &--full-width {
+    width: 100%;
+  }
+  
+  &--icon-only {
+    padding: $space-3;
+    aspect-ratio: 1;
+    
+    &.btn--sm {
+      padding: $space-2;
+    }
+    
+    &.btn--lg {
+      padding: $space-4;
+    }
+  }
+}
+
+// Button content elements
+.btn-icon {
+  font-size: 18px;
+  line-height: 1;
+  
+  .btn--sm & {
+    font-size: 16px;
+  }
+  
+  .btn--lg & {
+    font-size: 20px;
+  }
+}
+
+.btn-content {
+  transition: opacity $duration-normal $ease-in-out;
+}
+
+.btn-spinner {
+  @include flex-center;
+  position: absolute;
+  right: $space-3;
+  
+  .btn--sm & {
+    right: $space-2;
+  }
+  
+  .btn--lg & {
+    right: $space-4;
+  }
+}
+
+// Loading spinner
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: $radius-full;
+  animation: spin 1s linear infinite;
+  
+  .btn--sm & {
+    width: 14px;
+    height: 14px;
+    border-width: 1.5px;
+  }
+  
+  .btn--lg & {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Hover animations
+.btn:not(.btn--disabled):not(.btn--loading) {
+  &:hover {
+    transform: translateY(-1px);
+    
+    &.btn--ghost {
+      transform: none;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+    transition-duration: 0.1s;
+  }
+}
+
+// Focus improvements for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  .spinner {
+    animation: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .btn {
+    border: 2px solid;
+    
+    &--primary {
+      border-color: var(--color-primary);
+    }
+    
+    &--secondary {
+      border-color: currentColor;
+    }
+    
+    &--ghost {
+      border-color: currentColor;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .btn {
+    background: none !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    
+    .btn-spinner {
+      display: none;
+    }
+  }
+}

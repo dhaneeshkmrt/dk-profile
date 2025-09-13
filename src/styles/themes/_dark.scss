@@ -1,0 +1,308 @@
+// Dark Theme Styles
+// Dark theme specific styles and overrides
+
+[data-theme="dark"] {
+  // Dark theme color scheme
+  color-scheme: dark;
+  
+  // Base colors
+  --color-bg: #{$dark-bg};
+  --color-surface: #{$dark-surface};
+  --color-surface-alt: #{$dark-surface-alt};
+  --color-border: #{$dark-border};
+  
+  // Text colors
+  --color-text-primary: #{$dark-text-primary};
+  --color-text-secondary: #{$dark-text-secondary};
+  --color-text-muted: #{$dark-text-muted};
+  
+  // Primary colors remain the same
+  --color-primary: #{$primary-blue};
+  --color-primary-dark: #{$primary-dark};
+  --color-accent-cyan: #{$accent-cyan};
+  --color-accent-emerald: #{$accent-emerald};
+  
+  // Semantic colors remain the same
+  --color-success: #{$success};
+  --color-warning: #{$warning};
+  --color-error: #{$error};
+  --color-info: #{$info};
+  
+  // Shadows (darker and more prominent for dark theme)
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  
+  // Glass effects for dark theme
+  --glass-bg: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(75, 85, 99, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  
+  // Dark theme specific component styles
+  
+  // Navbar dark theme
+  .navbar {
+    background: rgba(30, 41, 59, 0.8);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+    backdrop-filter: blur(10px);
+    
+    .nav-link {
+      color: var(--color-text-secondary);
+      
+      &:hover {
+        background: rgba(37, 99, 235, 0.2);
+        color: var(--color-text-primary);
+      }
+      
+      &.active {
+        color: white;
+      }
+    }
+    
+    .logo {
+      color: var(--color-text-primary);
+    }
+  }
+  
+  // Card dark theme
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+    
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(75, 85, 99, 0.5);
+    }
+  }
+  
+  .card-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  
+  // Button dark theme
+  .btn-secondary {
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    
+    &:hover {
+      background: var(--color-surface-alt);
+      border-color: var(--color-primary);
+      color: var(--color-text-primary);
+    }
+  }
+  
+  .btn-ghost {
+    color: var(--color-text-secondary);
+    
+    &:hover {
+      background: var(--color-surface-alt);
+      color: var(--color-text-primary);
+    }
+  }
+  
+  // Form elements dark theme
+  .form-input,
+  input,
+  textarea,
+  select {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+    
+    &:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    
+    &:disabled {
+      background: var(--color-surface-alt);
+      opacity: 0.5;
+    }
+  }
+  
+  // Code blocks dark theme
+  pre {
+    background: #{$dark-surface-alt};
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+  }
+  
+  code {
+    background: var(--color-surface-alt);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+  }
+  
+  // Scrollbar dark theme
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    
+    &:hover {
+      background: var(--color-text-muted);
+    }
+  }
+  
+  // Selection dark theme
+  ::selection {
+    background: rgba(37, 99, 235, 0.3);
+    color: var(--color-text-primary);
+  }
+  
+  // Progress bars dark theme
+  .progress-bar {
+    background: var(--color-surface-alt);
+    
+    .progress-fill {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent-cyan));
+    }
+  }
+  
+  // Hero section dark theme specific
+  .hero {
+    background: linear-gradient(135deg, 
+                #{darken($primary-blue, 10%)} 0%, 
+                #{darken($accent-cyan, 5%)} 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15), transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15), transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.15), transparent 50%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    
+    .hero-title,
+    .hero-subtitle,
+    .hero-description {
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  // Blog post dark theme
+  .blog-post {
+    .post-content {
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--color-text-primary);
+      }
+      
+      p, li {
+        color: var(--color-text-secondary);
+      }
+      
+      blockquote {
+        border-left-color: var(--color-primary);
+        background: var(--color-surface-alt);
+        color: var(--color-text-secondary);
+      }
+      
+      a {
+        color: var(--color-accent-cyan);
+        
+        &:hover {
+          color: #{lighten($accent-cyan, 10%)};
+        }
+      }
+    }
+  }
+  
+  // Skills section dark theme
+  .skill-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    
+    &:hover {
+      border-color: rgba(37, 99, 235, 0.5);
+      box-shadow: var(--shadow-lg);
+      background: #{lighten($dark-surface, 2%)};
+    }
+    
+    .skill-name {
+      color: var(--color-text-primary);
+    }
+    
+    .skill-level {
+      color: var(--color-text-secondary);
+    }
+  }
+  
+  // Experience timeline dark theme
+  .timeline {
+    .timeline-line {
+      background: var(--color-border);
+    }
+    
+    .timeline-dot {
+      background: var(--color-primary);
+      border: 3px solid var(--color-surface);
+      box-shadow: 0 0 0 3px var(--color-border);
+    }
+  }
+  
+  // Contact form dark theme
+  .contact-form {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    
+    .form-group {
+      label {
+        color: var(--color-text-primary);
+      }
+    }
+  }
+  
+  // Footer dark theme
+  .footer {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    
+    .footer-text {
+      color: var(--color-text-secondary);
+    }
+    
+    .social-link {
+      color: var(--color-text-muted);
+      
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+  
+  // Theme toggle dark theme
+  .theme-toggle {
+    background: var(--color-primary);
+    
+    .toggle-thumb {
+      background: white;
+      transform: translateX(30px);
+    }
+    
+    .icon-sun {
+      opacity: 0;
+    }
+    
+    .icon-moon {
+      opacity: 1;
+    }
+  }
+}
