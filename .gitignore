@@ -57,3 +57,4 @@ Thumbs.db
 
 # PDF files (resume)
 *.pdf
+.playwright-mcp
