@@ -12,7 +12,7 @@
     "e2e:ui": "playwright test --ui",
     "e2e:debug": "playwright test --debug",
     "e2e:report": "playwright show-report",
-    "deploy": "npm run build:prod && npx angular-cli-ghpages --dir=dist/dk-portfolio"
+    "deploy": "npm run build:prod && npx angular-cli-ghpages --dir=dist/dk-portfolio/browser"
   },
   "prettier": {
     "printWidth": 100,
