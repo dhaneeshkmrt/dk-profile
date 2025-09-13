@@ -5,12 +5,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production --base-href /dk-profile/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "e2e:debug": "playwright test --debug",
-    "e2e:report": "playwright show-report"
+    "e2e:report": "playwright show-report",
+    "deploy": "npm run build:prod && npx angular-cli-ghpages --dir=dist/dk-portfolio"
   },
   "prettier": {
     "printWidth": 100,
@@ -44,6 +46,7 @@
     "@angular/compiler-cli": "^20.2.0",
     "@playwright/test": "^1.55.0",
     "@types/jasmine": "~5.1.0",
+    "angular-cli-ghpages": "^2.0.3",
     "autoprefixer": "^10.4.21",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
