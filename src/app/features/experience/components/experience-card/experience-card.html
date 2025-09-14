@@ -1,0 +1,107 @@
+<div class="experience-card"
+     [class.current-position]="isCurrentPosition"
+     [class.expanded]="experience.isExpanded">
+
+  <!-- Card Header -->
+  <div class="card-header" (click)="onToggleExpand()">
+    <div class="company-info">
+      <div class="company-details">
+        <h3 class="company-name">{{ experience.company }}</h3>
+        <h4 class="position-title">{{ experience.position }}</h4>
+        <div class="duration-location">
+          <span class="duration">{{ experience.duration }}</span>
+          <span class="duration-calculated">({{ displayDuration }})</span>
+          <span class="location">📍 {{ experience.location }}</span>
+        </div>
+      </div>
+
+      @if (isCurrentPosition) {
+        <div class="current-badge">
+          <span class="badge-text">Current</span>
+        </div>
+      }
+    </div>
+
+    <div class="expand-toggle">
+      <div class="expand-icon" [class.rotated]="experience.isExpanded">
+        ▼
+      </div>
+    </div>
+  </div>
+
+  <!-- Technologies Preview -->
+  <div class="tech-preview">
+    @for (tech of experience.technologies.slice(0, 4); track tech) {
+      <span class="tech-tag">{{ tech }}</span>
+    }
+    @if (experience.technologies.length > 4) {
+      <span class="tech-more">+{{ experience.technologies.length - 4 }} more</span>
+    }
+  </div>
+
+  <!-- Key Achievement Preview -->
+  <div class="achievement-preview">
+    <div class="achievement-item">
+      {{ experience.achievements[0] }}
+    </div>
+  </div>
+
+  <!-- Expanded Content -->
+  @if (experience.isExpanded) {
+    <div class="expanded-content">
+      <!-- All Achievements -->
+      <div class="section">
+        <h5 class="section-title">🎯 Key Achievements</h5>
+        <ul class="achievements-list">
+          @for (achievement of experience.achievements; track achievement) {
+            <li class="achievement-item-full">{{ achievement }}</li>
+          }
+        </ul>
+      </div>
+
+      <!-- Technologies -->
+      <div class="section">
+        <h5 class="section-title">🛠️ Technologies Used</h5>
+        <div class="tech-grid">
+          @for (tech of experience.technologies; track tech) {
+            <span class="tech-badge">{{ tech }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Responsibilities -->
+      <div class="section">
+        <h5 class="section-title">📋 Key Responsibilities</h5>
+        <ul class="responsibilities-list">
+          @for (responsibility of experience.responsibilities; track responsibility) {
+            <li class="responsibility-item">{{ responsibility }}</li>
+          }
+        </ul>
+      </div>
+
+      <!-- Project Highlights -->
+      @if (experience.projectHighlights && experience.projectHighlights.length > 0) {
+        <div class="section">
+          <h5 class="section-title">⭐ Project Highlights</h5>
+          <div class="projects-grid">
+            @for (project of experience.projectHighlights; track project.name) {
+              <div class="project-highlight">
+                <h6 class="project-name">{{ project.name }}</h6>
+                <p class="project-description">{{ project.description }}</p>
+                <div class="project-impact">
+                  <span class="impact-label">Impact:</span>
+                  <span class="impact-value">{{ project.impact }}</span>
+                </div>
+                <div class="project-tech">
+                  @for (tech of project.technologies; track tech) {
+                    <span class="project-tech-tag">{{ tech }}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

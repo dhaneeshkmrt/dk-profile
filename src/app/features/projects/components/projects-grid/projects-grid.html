@@ -1,0 +1,58 @@
+<div class="projects-grid-container">
+  <!-- Header Section -->
+  <div class="projects-header">
+    <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+      My Projects Portfolio
+    </h2>
+    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+      Showcasing {{ projects().length }} enterprise and personal projects with significant impact
+    </p>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-wrapper mb-8">
+    <app-project-filters
+      [technologies]="allTechnologies()"
+      [companies]="allCompanies()"
+      [categories]="allCategories()"
+      [statuses]="allStatuses()"
+      [currentFilter]="currentFilter()"
+      (filterChange)="onFilterChange($event)"
+      (clearFilters)="onClearFilters()">
+    </app-project-filters>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary mb-6">
+    <div class="results-text">
+      Showing {{ filteredProjects().length }} of {{ projects().length }} projects
+    </div>
+  </div>
+
+  <!-- Projects Grid -->
+  @if (filteredProjects().length > 0) {
+    <div class="projects-grid">
+      @for (project of filteredProjects(); track project.id) {
+        <app-project-card
+          [project]="project"
+          (viewDetails)="onViewProjectDetails($event)">
+        </app-project-card>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <h3 class="empty-title">No projects found</h3>
+      <p class="empty-message">
+        Try adjusting your filters to see more results.
+      </p>
+      <button
+        (click)="onClearFilters()"
+        class="empty-action">
+        Clear All Filters
+      </button>
+    </div>
+  }
+
+  <!-- Load More / Pagination can be added here if needed -->
+</div>

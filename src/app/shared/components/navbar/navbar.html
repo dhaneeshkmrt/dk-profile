@@ -17,13 +17,26 @@
       <!-- Desktop Navigation -->
       <div class="hidden md:flex items-center space-x-8">
         @for (item of navItems(); track item.label) {
-          <a 
-            [href]="item.path" 
-            class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium text-sm"
-            [attr.aria-label]="item.label"
-          >
-            {{ item.label }}
-          </a>
+          @if (item.isRoute) {
+            <a
+              [routerLink]="item.path"
+              routerLinkActive="text-primary-600 dark:text-primary-400"
+              class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium text-sm"
+              [attr.aria-label]="item.label"
+              (click)="navigateToSection(item.path, item.isRoute)"
+            >
+              {{ item.label }}
+            </a>
+          } @else {
+            <a
+              [href]="item.path"
+              class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium text-sm"
+              [attr.aria-label]="item.label"
+              (click)="navigateToSection(item.path, item.isRoute)"
+            >
+              {{ item.label }}
+            </a>
+          }
         }
       </div>
 
@@ -66,13 +79,24 @@
       <div class="md:hidden border-t border-gray-200 dark:border-gray-700 animate-slide-up">
         <div class="py-4 space-y-2">
           @for (item of navItems(); track item.label) {
-            <a 
-              [href]="item.path" 
-              (click)="closeMobileMenu()"
-              class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium"
-            >
-              {{ item.label }}
-            </a>
+            @if (item.isRoute) {
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400"
+                (click)="navigateToSection(item.path, item.isRoute)"
+                class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium"
+              >
+                {{ item.label }}
+              </a>
+            } @else {
+              <a
+                [href]="item.path"
+                (click)="navigateToSection(item.path, item.isRoute)"
+                class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 font-medium"
+              >
+                {{ item.label }}
+              </a>
+            }
           }
           <!-- Mobile Resume Button -->
           <a 

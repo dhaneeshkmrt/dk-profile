@@ -1,0 +1,105 @@
+<div class="project-filters">
+  <div class="filters-header">
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      Filter Projects
+    </h3>
+    @if (hasActiveFilters) {
+      <button
+        (click)="onClearFilters()"
+        class="clear-filters-btn">
+        Clear All Filters
+      </button>
+    }
+  </div>
+
+  <div class="filters-grid">
+    <!-- Category Filter -->
+    <div class="filter-group">
+      <label class="filter-label">Category</label>
+      <select
+        [value]="selectedCategory()"
+        (change)="handleCategoryChange($event)"
+        class="filter-select">
+        <option value="">All Categories</option>
+        @for (category of categories; track category) {
+          <option [value]="category">{{ category }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="filter-group">
+      <label class="filter-label">Status</label>
+      <select
+        [value]="selectedStatus()"
+        (change)="handleStatusChange($event)"
+        class="filter-select">
+        <option value="">All Statuses</option>
+        @for (status of statuses; track status) {
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Technology Filter -->
+    <div class="filter-group">
+      <label class="filter-label">Technology</label>
+      <select
+        [value]="selectedTechnology()"
+        (change)="handleTechnologyChange($event)"
+        class="filter-select">
+        <option value="">All Technologies</option>
+        @for (tech of technologies; track tech) {
+          <option [value]="tech">{{ tech }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Company Filter -->
+    <div class="filter-group">
+      <label class="filter-label">Company</label>
+      <select
+        [value]="selectedCompany()"
+        (change)="handleCompanyChange($event)"
+        class="filter-select">
+        <option value="">All Companies</option>
+        @for (company of companies; track company) {
+          <option [value]="company">{{ company }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Active Filters Display -->
+  @if (hasActiveFilters) {
+    <div class="active-filters">
+      <div class="active-filters-label">Active Filters:</div>
+      <div class="active-filters-tags">
+        @if (selectedCategory()) {
+          <span class="filter-tag">
+            Category: {{ selectedCategory() }}
+            <button (click)="onCategoryChange('')" class="remove-filter">×</button>
+          </span>
+        }
+        @if (selectedStatus()) {
+          <span class="filter-tag">
+            Status: {{ selectedStatus() }}
+            <button (click)="onStatusChange('')" class="remove-filter">×</button>
+          </span>
+        }
+        @if (selectedTechnology()) {
+          <span class="filter-tag">
+            Tech: {{ selectedTechnology() }}
+            <button (click)="onTechnologyChange('')" class="remove-filter">×</button>
+          </span>
+        }
+        @if (selectedCompany()) {
+          <span class="filter-tag">
+            Company: {{ selectedCompany() }}
+            <button (click)="onCompanyChange('')" class="remove-filter">×</button>
+          </span>
+        }
+      </div>
+    </div>
+  }
+</div>

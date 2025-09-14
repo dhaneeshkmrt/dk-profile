@@ -1,0 +1,90 @@
+<div class="experience-timeline-container">
+  <!-- Header Section -->
+  <div class="timeline-header">
+    <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+      My Professional Journey
+    </h2>
+    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+      11+ years of experience building enterprise applications and leading development teams
+    </p>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filters-section mb-8">
+    <div class="flex flex-wrap gap-4 items-center">
+      <div class="filter-group">
+        <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+          Filter by Technology:
+        </label>
+        <select
+          [value]="selectedTechnology()"
+          (change)="onTechnologyChange($event)"
+          class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
+          <option value="">All Technologies</option>
+          @for (tech of allTechnologies(); track tech) {
+            <option [value]="tech">{{ tech }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+          Filter by Company:
+        </label>
+        <select
+          [value]="selectedCompany()"
+          (change)="onCompanyChange($event)"
+          class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
+          <option value="">All Companies</option>
+          @for (company of allCompanies(); track company) {
+            <option [value]="company">{{ company }}</option>
+          }
+        </select>
+      </div>
+
+      @if (selectedTechnology() || selectedCompany()) {
+        <button
+          (click)="clearFilters()"
+          class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-md transition-colors">
+          Clear Filters
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline-wrapper">
+    <div class="timeline-line"></div>
+
+    @for (experience of filteredExperiences(); track experience.id; let index = $index) {
+      <div class="timeline-item"
+           [class.even]="index % 2 === 1">
+
+        <!-- Timeline dot -->
+        <div class="timeline-dot">
+          <div class="dot-inner"></div>
+        </div>
+
+        <!-- Experience Card -->
+        <div class="timeline-content">
+          <app-experience-card
+            [experience]="experience"
+            (toggleExpanded)="onExperienceToggle($event)">
+          </app-experience-card>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (filteredExperiences().length === 0) {
+    <div class="empty-state text-center py-12">
+      <div class="text-6xl mb-4">🔍</div>
+      <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        No experiences found
+      </h3>
+      <p class="text-gray-500 dark:text-gray-400">
+        Try adjusting your filters to see more results.
+      </p>
+    </div>
+  }
+</div>
