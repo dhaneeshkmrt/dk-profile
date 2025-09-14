@@ -32,7 +32,7 @@ export class ExperienceHighlightsComponent {
       tech: ['Angular 15', 'TypeScript', 'Performance Optimization']
     },
     {
-      company: 'Epam Systems',
+      company: 'EPAM Systems',
       role: 'Software Engineer',
       period: '2017 - 2019',
       highlights: [
