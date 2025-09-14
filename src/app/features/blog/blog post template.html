@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Output - JS Event Loop</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid #333;
+    }
+
+    .title {
+      color: #61dafb;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
+    }
+
+    .subtitle {
+      color: #888;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .code-block {
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .code {
+      color: #f8f8f2;
+      line-height: 1.6;
+      font-size: 14px;
+      white-space: pre;
+    }
+
+    .keyword {
+      color: #66d9ef;
+    }
+
+    .string {
+      color: #e6db74;
+    }
+
+    .function {
+      color: #a6e22e;
+    }
+
+    .comment {
+      color: #75715e;
+    }
+
+    .arrow {
+      color: #f92672;
+    }
+
+    .reveal-btn {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      margin: 25px auto;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .reveal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    .output {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .output.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .output-line {
+      color: #58a6ff;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .explanation {
+      background: #0f3460;
+      border-left: 4px solid #61dafb;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .explanation h4 {
+      color: #61dafb;
+      margin-bottom: 10px;
+    }
+
+    .explanation p {
+      color: #e6f7ff;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #ff6b6b;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin: 5px 5px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">🤔 Guess the Output!</h1>
+    <p class="subtitle">Test your JavaScript Event Loop knowledge</p>
+
+    <div class="code-block">
+      <div class="code"><span class="function">console.log</span>(<span class="string">"Start"</span>);
+
+        <span class="function">setTimeout</span>(<span class="arrow">() =></span> <span
+          class="function">console.log</span>(<span class="string">"Timeout"</span>), <span class="number">0</span>);
+
+        <span class="function">queueMicrotask</span>(<span class="arrow">() =></span> <span
+          class="function">console.log</span>(<span class="string">"MicroTask"</span>));
+
+        <span class="keyword">new</span> <span class="function">Promise</span>(<span class="arrow">(res, rej) =></span>
+        {
+        <span class="function">console.log</span>(<span class="string">"Inside Promise"</span>);
+        <span class="function">res</span>();
+        }).<span class="function">then</span>(<span class="arrow">() =></span> <span
+          class="function">console.log</span>(<span class="string">"Promise"</span>));
+
+        <span class="function">console.log</span>(<span class="string">"End"</span>);
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag">#JavaScript</span>
+      <span class="tag">#EventLoop</span>
+      <span class="tag">#Async</span>
+      <span class="tag">#Interview</span>
+    </div>
+
+    <div class="output" id="output">
+      <div class="output-line">Start</div>
+      <div class="output-line">Inside Promise</div>
+      <div class="output-line">End</div>
+      <div class="output-line">MicroTask</div>
+      <div class="output-line">Promise</div>
+      <div class="output-line">Timeout</div>
+
+      <div class="explanation">
+        <h4>💡 Why this order?</h4>
+        <p>
+          <strong>Synchronous code</strong> runs first (Start → Inside Promise → End),
+          then <strong>microtasks</strong> (MicroTask → Promise),
+          finally <strong>macrotasks</strong> (Timeout).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function revealOutput () {
+      const output = document.getElementById('output');
+      const btn = document.querySelector('.reveal-btn');
+
+      output.classList.add('show');
+      btn.style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>

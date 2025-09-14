@@ -1,5 +1,71 @@
 <section id="projects" class="py-20 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-gray-600 dark:text-gray-400">Projects Preview Section - Coming Soon</p>
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Featured Projects
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Enterprise solutions that drive business value and user satisfaction
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      @for (project of projects(); track project.title) {
+        <div class="group bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+          <!-- Project Image Placeholder -->
+          <div class="h-48 bg-gradient-to-br from-primary-400 to-primary-600 relative overflow-hidden">
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-white text-6xl opacity-50">{{ project.title.charAt(0) }}</span>
+            </div>
+          </div>
+
+          <!-- Project Content -->
+          <div class="p-6">
+            <div class="mb-3">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{{ project.title }}</h3>
+              <p class="text-sm text-primary-600 dark:text-primary-400 font-medium">{{ project.company }}</p>
+            </div>
+
+            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{{ project.description }}</p>
+
+            <!-- Key Achievements -->
+            <div class="mb-4">
+              <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Key Achievements:</h4>
+              <ul class="space-y-1">
+                @for (achievement of project.achievements; track achievement) {
+                  <li class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                    <svg class="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    {{ achievement }}
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="flex flex-wrap gap-1">
+              @for (tech of project.tech; track tech) {
+                <span class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
+                  {{ tech }}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- View All Projects CTA -->
+    <div class="text-center mt-12">
+      <button class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
+        View All Projects
+        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 </section>
