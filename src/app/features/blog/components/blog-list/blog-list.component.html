@@ -1,0 +1,168 @@
+<div class="blog-list-container">
+  <!-- Header Section -->
+  <div class="blog-header">
+    <div class="header-content">
+      <h1 class="page-title">Technical Blog</h1>
+      <p class="page-description">
+        Insights, tutorials, and experiences from software development and technical leadership
+      </p>
+    </div>
+
+    <!-- Search Component -->
+    <app-blog-search
+      [searchTerm]="searchTerm()"
+      (searchChange)="onSearchChange($event)"
+      [loading]="loading()">
+    </app-blog-search>
+  </div>
+
+  <div class="blog-content">
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+      <app-blog-sidebar
+        [categories]="categories()"
+        [popularTags]="popularTags()"
+        [selectedCategory]="selectedCategory()"
+        [selectedTag]="selectedTag()"
+        [showFeaturedOnly]="showFeaturedOnly()"
+        [hasActiveFilters]="hasActiveFilters()"
+        (categoryFilter)="onCategoryFilter($event)"
+        (tagFilter)="onTagFilter($event)"
+        (toggleFeatured)="onToggleFeatured()"
+        (clearFilters)="onClearFilters()">
+      </app-blog-sidebar>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="blog-main">
+      <!-- Results Summary -->
+      <div class="results-summary">
+        <div class="results-info">
+          @if (hasActiveFilters()) {
+            <span class="filtered-count">
+              {{ filteredPosts().length }} of {{ totalPosts() }} posts
+            </span>
+          } @else {
+            <span class="total-count">
+              {{ totalPosts() }} posts
+            </span>
+          }
+        </div>
+
+        @if (hasActiveFilters()) {
+          <button
+            class="clear-filters-btn"
+            (click)="onClearFilters()">
+            Clear Filters
+          </button>
+        }
+      </div>
+
+      <!-- Loading State -->
+      @if (loading()) {
+        <div class="loading-container">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">Loading blog posts...</p>
+        </div>
+      }
+
+      <!-- Error State -->
+      @else if (error()) {
+        <div class="error-container">
+          <div class="error-icon">⚠️</div>
+          <h3 class="error-title">Something went wrong</h3>
+          <p class="error-message">{{ error() }}</p>
+          <button
+            class="retry-btn"
+            (click)="loadBlogData()">
+            Try Again
+          </button>
+        </div>
+      }
+
+      <!-- Empty State -->
+      @else if (filteredPosts().length === 0 && !loading()) {
+        <div class="empty-container">
+          <div class="empty-icon">📝</div>
+          <h3 class="empty-title">
+            @if (hasActiveFilters()) {
+              No posts match your filters
+            } @else {
+              No blog posts yet
+            }
+          </h3>
+          <p class="empty-message">
+            @if (hasActiveFilters()) {
+              Try adjusting your search criteria or clearing filters.
+            } @else {
+              Check back soon for new content!
+            }
+          </p>
+          @if (hasActiveFilters()) {
+            <button
+              class="clear-filters-btn"
+              (click)="onClearFilters()">
+              Clear All Filters
+            </button>
+          }
+        </div>
+      }
+
+      <!-- Blog Posts Grid -->
+      @else {
+        <div class="blog-grid">
+          @for (post of filteredPosts(); track trackByPostId($index, post)) {
+            <app-blog-card
+              [post]="post"
+              (click)="onPostClick(post)"
+              class="blog-card-wrapper">
+            </app-blog-card>
+          }
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages() > 1 && !hasActiveFilters()) {
+          <div class="pagination-container">
+            <nav class="pagination" aria-label="Blog pagination">
+              <!-- Previous Button -->
+              <button
+                class="pagination-btn prev-btn"
+                [disabled]="currentPage() === 1"
+                (click)="onPageChange(currentPage() - 1)"
+                aria-label="Previous page">
+                ← Previous
+              </button>
+
+              <!-- Page Numbers -->
+              <div class="page-numbers">
+                @for (page of [].constructor(totalPages()); track $index) {
+                  <button
+                    class="page-btn"
+                    [class.active]="currentPage() === $index + 1"
+                    (click)="onPageChange($index + 1)"
+                    [attr.aria-label]="'Go to page ' + ($index + 1)"
+                    [attr.aria-current]="currentPage() === $index + 1 ? 'page' : null">
+                    {{ $index + 1 }}
+                  </button>
+                }
+              </div>
+
+              <!-- Next Button -->
+              <button
+                class="pagination-btn next-btn"
+                [disabled]="currentPage() === totalPages()"
+                (click)="onPageChange(currentPage() + 1)"
+                aria-label="Next page">
+                Next →
+              </button>
+            </nav>
+
+            <div class="pagination-info">
+              Page {{ currentPage() }} of {{ totalPages() }}
+            </div>
+          </div>
+        }
+      }
+    </main>
+  </div>
+</div>

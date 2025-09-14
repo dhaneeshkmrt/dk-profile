@@ -1,0 +1,122 @@
+<article class="blog-card" (click)="onCardClick($event)">
+  <!-- Cover Image -->
+  <div class="card-image">
+    <img
+      [src]="post.coverImage || getDefaultImage()"
+      [alt]="post.title"
+      class="cover-image"
+      loading="lazy">
+
+    @if (post.featured) {
+      <div class="featured-badge">
+        <span class="featured-text">Featured</span>
+      </div>
+    }
+
+    @if (showCategory) {
+      <div class="category-badge">
+        <button
+          class="category-link"
+          [style.background-color]="post.category.color"
+          (click)="onCategoryClick($event)"
+          [attr.aria-label]="'Filter by category: ' + post.category.name">
+          <span class="category-icon">{{ post.category.icon }}</span>
+          <span class="category-name">{{ post.category.name }}</span>
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Card Content -->
+  <div class="card-content">
+    <!-- Header -->
+    <header class="card-header">
+      <h3 class="post-title">
+        <a [routerLink]="['/blog', post.slug]" class="title-link">
+          {{ post.title }}
+        </a>
+      </h3>
+
+      <div class="post-meta">
+        <div class="author-info">
+          @if (post.author.avatar) {
+            <img
+              [src]="post.author.avatar"
+              [alt]="post.author.name"
+              class="author-avatar">
+          }
+          <span class="author-name">{{ post.author.name }}</span>
+        </div>
+
+        <div class="post-date">
+          <time [dateTime]="post.publishDate.toISOString()">
+            {{ formatDate(post.publishDate) }}
+          </time>
+        </div>
+
+        @if (showReadTime) {
+          <div class="read-time">
+            <span class="read-time-icon">📖</span>
+            <span class="read-time-text">{{ getReadTimeText(post.readTime) }}</span>
+          </div>
+        }
+      </div>
+    </header>
+
+    <!-- Excerpt -->
+    @if (showExcerpt && post.excerpt) {
+      <div class="post-excerpt">
+        <p>{{ post.excerpt }}</p>
+      </div>
+    }
+
+    <!-- Tags -->
+    @if (showTags && post.tags.length > 0) {
+      <div class="post-tags">
+        @for (tag of post.tags.slice(0, 3); track tag) {
+          <button
+            class="tag"
+            (click)="onTagClick($event, tag)"
+            [attr.aria-label]="'Filter by tag: ' + tag">
+            #{{ tag }}
+          </button>
+        }
+
+        @if (post.tags.length > 3) {
+          <span class="more-tags">
+            +{{ post.tags.length - 3 }} more
+          </span>
+        }
+      </div>
+    }
+
+    <!-- Card Footer -->
+    <footer class="card-footer">
+      <div class="post-stats">
+        @if (post.views) {
+          <div class="stat-item">
+            <span class="stat-icon">👁️</span>
+            <span class="stat-count">{{ post.views }}</span>
+          </div>
+        }
+
+        @if (post.likes) {
+          <div class="stat-item">
+            <span class="stat-icon">❤️</span>
+            <span class="stat-count">{{ post.likes }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="read-more">
+        <a
+          [routerLink]="['/blog', post.slug]"
+          class="read-more-link"
+          [attr.aria-label]="'Read full article: ' + post.title">
+          Read more
+          <span class="read-more-arrow">→</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+</article>

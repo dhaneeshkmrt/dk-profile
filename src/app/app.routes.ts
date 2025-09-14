@@ -17,6 +17,11 @@ export const routes: Routes = [
     title: 'Projects - Dhaneesh Kumar T'
   },
   {
+    path: 'blog',
+    loadChildren: () => import('./features/blog/blog.routes').then(m => m.BLOG_ROUTES),
+    title: 'Blog - Dhaneesh Kumar T'
+  },
+  {
     path: '**',
     redirectTo: ''
   }

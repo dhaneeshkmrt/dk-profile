@@ -1,0 +1,322 @@
+.blog-search {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  .search-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &.focused {
+      border-color: rgba(102, 126, 234, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.25rem;
+      height: 1.25rem;
+      color: rgba(255, 255, 255, 0.6);
+      z-index: 2;
+
+      .search-icon-svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .search-spinner {
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-top: 2px solid rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1.25rem 1rem 3.5rem;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.3s ease;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 400;
+      }
+
+      &:focus {
+        color: white;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+
+    .clear-button {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 2;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.8);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .clear-icon {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+
+  .suggestions-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    overflow: hidden;
+    z-index: 10;
+    animation: fadeInUp 0.3s ease;
+
+    .suggestions-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .suggestion-item {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        text-align: left;
+
+        &:hover {
+          background: rgba(102, 126, 234, 0.2);
+          color: white;
+        }
+
+        .suggestion-icon {
+          opacity: 0.6;
+          font-size: 0.75rem;
+        }
+
+        .suggestion-text {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .search-tips {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    z-index: 10;
+    animation: fadeInUp 0.3s ease;
+
+    .tips-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.75rem;
+    }
+
+    .tips-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        line-height: 1.4;
+
+        &::before {
+          content: '💡';
+          font-size: 0.75rem;
+          opacity: 0.8;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .blog-search {
+    max-width: 100%;
+
+    .search-container {
+      border-radius: 1.5rem;
+
+      .search-input {
+        padding: 0.875rem 1rem 0.875rem 3rem;
+        font-size: 0.875rem;
+      }
+
+      .search-icon {
+        left: 1rem;
+        width: 1.125rem;
+        height: 1.125rem;
+
+        .search-spinner {
+          width: 1.125rem;
+          height: 1.125rem;
+        }
+      }
+
+      .clear-button {
+        right: 0.875rem;
+        width: 1.75rem;
+        height: 1.75rem;
+
+        .clear-icon {
+          width: 0.75rem;
+          height: 0.75rem;
+        }
+      }
+    }
+
+    .suggestions-container {
+      .suggestions-list .suggestion-item {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    .search-tips {
+      padding: 1rem;
+
+      .tips-title {
+        font-size: 0.8rem;
+      }
+
+      .tips-list li {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-search {
+    .search-container {
+      border-radius: 1.25rem;
+
+      .search-input {
+        padding: 0.75rem 0.875rem 0.75rem 2.75rem;
+        font-size: 0.8rem;
+      }
+
+      .search-icon {
+        left: 0.875rem;
+        width: 1rem;
+        height: 1rem;
+
+        .search-spinner {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+
+      .clear-button {
+        right: 0.75rem;
+        width: 1.5rem;
+        height: 1.5rem;
+
+        .clear-icon {
+          width: 0.675rem;
+          height: 0.675rem;
+        }
+      }
+    }
+
+    .search-tips {
+      padding: 0.875rem;
+
+      .tips-list li {
+        font-size: 0.7rem;
+      }
+    }
+  }
+}

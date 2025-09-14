@@ -1,0 +1,137 @@
+<aside class="blog-sidebar">
+  <!-- Filter Summary -->
+  @if (hasActiveFilters) {
+    <div class="filter-summary">
+      <div class="summary-header">
+        <h3 class="summary-title">Active Filters</h3>
+        <button
+          class="clear-all-btn"
+          (click)="onClearAllFilters()"
+          aria-label="Clear all filters">
+          Clear All
+        </button>
+      </div>
+
+      <div class="active-filters">
+        @if (selectedCategory) {
+          <div class="active-filter">
+            <span class="filter-label">Category:</span>
+            <span class="filter-value">
+              {{ categories.find(cat => cat.slug === selectedCategory)?.name || selectedCategory }}
+            </span>
+          </div>
+        }
+
+        @if (selectedTag) {
+          <div class="active-filter">
+            <span class="filter-label">Tag:</span>
+            <span class="filter-value">#{{ selectedTag }}</span>
+          </div>
+        }
+
+        @if (showFeaturedOnly) {
+          <div class="active-filter">
+            <span class="filter-label">Featured posts only</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Featured Toggle -->
+  <div class="sidebar-section">
+    <h3 class="section-title">Filter Options</h3>
+    <div class="filter-options">
+      <label class="toggle-option">
+        <input
+          type="checkbox"
+          [checked]="showFeaturedOnly"
+          (change)="onFeaturedToggle()"
+          class="toggle-input">
+        <span class="toggle-label">Featured posts only</span>
+        <span class="toggle-description">Show only featured articles</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  @if (categories.length > 0) {
+    <div class="sidebar-section">
+      <h3 class="section-title">Categories</h3>
+      <div class="categories-list">
+        @for (category of categories; track category.id) {
+          <button
+            class="category-item"
+            [class.selected]="isCategorySelected(category.slug)"
+            (click)="onCategoryClick(category.slug)"
+            [style.--category-color]="category.color"
+            [attr.aria-pressed]="isCategorySelected(category.slug)">
+
+            <span class="category-icon">{{ category.icon }}</span>
+            <div class="category-content">
+              <span class="category-name">{{ category.name }}</span>
+              @if (category.description) {
+                <span class="category-description">{{ category.description }}</span>
+              }
+            </div>
+
+            @if (isCategorySelected(category.slug)) {
+              <span class="selected-indicator">✓</span>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Popular Tags -->
+  @if (popularTags.length > 0) {
+    <div class="sidebar-section">
+      <h3 class="section-title">Popular Tags</h3>
+      <div class="tags-cloud">
+        @for (tag of popularTags; track tag) {
+          <button
+            class="tag-item"
+            [class.selected]="isTagSelected(tag)"
+            (click)="onTagClick(tag)"
+            [attr.aria-pressed]="isTagSelected(tag)">
+            #{{ tag }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Quick Stats -->
+  <div class="sidebar-section">
+    <h3 class="section-title">Blog Stats</h3>
+    <div class="blog-stats">
+      <div class="stat-item">
+        <span class="stat-icon">📝</span>
+        <span class="stat-label">Categories</span>
+        <span class="stat-value">{{ categories.length }}</span>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-icon">🏷️</span>
+        <span class="stat-label">Popular Tags</span>
+        <span class="stat-value">{{ popularTags.length }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="sidebar-section">
+    <h3 class="section-title">About This Blog</h3>
+    <div class="about-content">
+      <p>
+        Technical insights and experiences from software development,
+        Angular expertise, and technical leadership.
+      </p>
+      <div class="author-info">
+        <div class="author-name">Dhaneesh Kumar T</div>
+        <div class="author-title">Senior Technical Lead</div>
+      </div>
+    </div>
+  </div>
+</aside>

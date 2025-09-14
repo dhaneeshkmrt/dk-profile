@@ -1,0 +1,288 @@
+<div class="blog-post-container">
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading article...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @else if (error()) {
+    <div class="error-container">
+      <div class="error-icon">⚠️</div>
+      <h1 class="error-title">Article Not Found</h1>
+      <p class="error-message">{{ error() }}</p>
+      <div class="error-actions">
+        <button class="back-btn" (click)="onBackToBlog()">
+          ← Back to Blog
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Post Content -->
+  @else if (post(); as currentPost) {
+    <!-- Navigation -->
+    <nav class="post-navigation">
+      <button class="back-btn" (click)="onBackToBlog()">
+        ← Back to Blog
+      </button>
+
+      <div class="nav-actions">
+        <button
+          class="share-btn"
+          (click)="onSharePost('twitter')"
+          aria-label="Share on Twitter">
+          <span class="share-icon">🐦</span>
+        </button>
+        <button
+          class="share-btn"
+          (click)="onSharePost('linkedin')"
+          aria-label="Share on LinkedIn">
+          <span class="share-icon">💼</span>
+        </button>
+      </div>
+    </nav>
+
+    <article class="blog-post">
+      <!-- Post Header -->
+      <header class="post-header">
+        <!-- Category Badge -->
+        <div class="category-info">
+          <button
+            class="category-badge"
+            [style.background-color]="postMeta()?.categoryColor"
+            (click)="onCategoryClick(currentPost.category.slug)">
+            <span class="category-icon">{{ postMeta()?.categoryIcon }}</span>
+            <span class="category-name">{{ postMeta()?.category }}</span>
+          </button>
+        </div>
+
+        <!-- Title -->
+        <h1 class="post-title">{{ currentPost.title }}</h1>
+
+        <!-- Meta Information -->
+        <div class="post-meta">
+          <div class="author-info">
+            @if (currentPost.author.avatar) {
+              <img
+                [src]="currentPost.author.avatar"
+                [alt]="currentPost.author.name"
+                class="author-avatar">
+            }
+            <div class="author-details">
+              <span class="author-name">{{ currentPost.author.name }}</span>
+              @if (currentPost.author.bio) {
+                <span class="author-bio">{{ currentPost.author.bio }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="post-stats">
+            <div class="stat-item">
+              <span class="stat-icon">📅</span>
+              <time [dateTime]="currentPost.publishDate.toISOString()">
+                {{ postMeta()?.publishDate }}
+              </time>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-icon">📖</span>
+              <span>{{ postMeta()?.readTime }}</span>
+            </div>
+
+            @if (currentPost.views) {
+              <div class="stat-item">
+                <span class="stat-icon">👁️</span>
+                <span>{{ currentPost.views }} views</span>
+              </div>
+            }
+
+            @if (currentPost.likes) {
+              <div class="stat-item">
+                <span class="stat-icon">❤️</span>
+                <span>{{ currentPost.likes }} likes</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Cover Image -->
+        @if (currentPost.coverImage) {
+          <div class="cover-image-container">
+            <img
+              [src]="currentPost.coverImage"
+              [alt]="currentPost.title"
+              class="cover-image">
+          </div>
+        }
+      </header>
+
+      <!-- Post Content -->
+      <div class="post-content">
+        <!-- Excerpt -->
+        @if (currentPost.excerpt) {
+          <div class="post-excerpt">
+            <p class="excerpt-text">{{ currentPost.excerpt }}</p>
+          </div>
+        }
+
+        <!-- Main Content -->
+        <div
+          class="post-body"
+          [innerHTML]="currentPost.content">
+        </div>
+      </div>
+
+      <!-- Post Footer -->
+      <footer class="post-footer">
+        <!-- Tags -->
+        @if (currentPost.tags.length > 0) {
+          <div class="post-tags">
+            <span class="tags-label">Tags:</span>
+            <div class="tags-list">
+              @for (tag of currentPost.tags; track tag) {
+                <button
+                  class="tag"
+                  (click)="onTagClick(tag)">
+                  #{{ tag }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Share Buttons -->
+        <div class="share-section">
+          <span class="share-label">Share this article:</span>
+          <div class="share-buttons">
+            <button
+              class="share-button twitter"
+              (click)="onSharePost('twitter')"
+              aria-label="Share on Twitter">
+              <span class="share-icon">🐦</span>
+              <span class="share-text">Twitter</span>
+            </button>
+
+            <button
+              class="share-button linkedin"
+              (click)="onSharePost('linkedin')"
+              aria-label="Share on LinkedIn">
+              <span class="share-icon">💼</span>
+              <span class="share-text">LinkedIn</span>
+            </button>
+
+            <button
+              class="share-button facebook"
+              (click)="onSharePost('facebook')"
+              aria-label="Share on Facebook">
+              <span class="share-icon">📘</span>
+              <span class="share-text">Facebook</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Author Bio -->
+        <div class="author-bio-section">
+          <div class="author-bio-header">
+            @if (currentPost.author.avatar) {
+              <img
+                [src]="currentPost.author.avatar"
+                [alt]="currentPost.author.name"
+                class="author-bio-avatar">
+            }
+            <div class="author-bio-info">
+              <h3 class="author-bio-name">{{ currentPost.author.name }}</h3>
+              @if (currentPost.author.bio) {
+                <p class="author-bio-text">{{ currentPost.author.bio }}</p>
+              }
+            </div>
+          </div>
+
+          @if (currentPost.author.socialLinks) {
+            <div class="author-social">
+              @if (currentPost.author.socialLinks.github) {
+                <a
+                  [href]="currentPost.author.socialLinks.github"
+                  target="_blank"
+                  class="social-link github"
+                  aria-label="GitHub profile">
+                  GitHub
+                </a>
+              }
+
+              @if (currentPost.author.socialLinks.linkedin) {
+                <a
+                  [href]="currentPost.author.socialLinks.linkedin"
+                  target="_blank"
+                  class="social-link linkedin"
+                  aria-label="LinkedIn profile">
+                  LinkedIn
+                </a>
+              }
+
+              @if (currentPost.author.socialLinks.website) {
+                <a
+                  [href]="currentPost.author.socialLinks.website"
+                  target="_blank"
+                  class="social-link website"
+                  aria-label="Personal website">
+                  Website
+                </a>
+              }
+            </div>
+          }
+        </div>
+      </footer>
+    </article>
+
+    <!-- Related Posts -->
+    @if (relatedPosts().length > 0) {
+      <section class="related-posts">
+        <h2 class="related-title">Related Articles</h2>
+        <div class="related-grid">
+          @for (relatedPost of relatedPosts(); track relatedPost.id) {
+            <article class="related-post-card" (click)="onRelatedPostClick(relatedPost)">
+              @if (relatedPost.coverImage) {
+                <div class="related-image">
+                  <img
+                    [src]="relatedPost.coverImage"
+                    [alt]="relatedPost.title"
+                    class="related-cover">
+                </div>
+              }
+
+              <div class="related-content">
+                <div class="related-category">
+                  <span
+                    class="related-category-badge"
+                    [style.background-color]="relatedPost.category.color">
+                    {{ relatedPost.category.name }}
+                  </span>
+                </div>
+
+                <h3 class="related-post-title">
+                  <a [routerLink]="['/blog', relatedPost.slug]">
+                    {{ relatedPost.title }}
+                  </a>
+                </h3>
+
+                <p class="related-excerpt">{{ relatedPost.excerpt }}</p>
+
+                <div class="related-meta">
+                  <span class="related-date">
+                    {{ formatDate(relatedPost.publishDate) }}
+                  </span>
+                  <span class="related-read-time">
+                    {{ relatedPost.readTime }} min read
+                  </span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+</div>

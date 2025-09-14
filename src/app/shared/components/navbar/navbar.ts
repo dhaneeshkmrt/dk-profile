@@ -24,7 +24,7 @@ export class NavbarComponent {
     { label: 'Experience', path: '/experience', isRoute: true },
     { label: 'Skills', path: '#skills', isRoute: false },
     { label: 'Projects', path: '/projects', isRoute: true },
-    { label: 'Blog', path: '#blog', isRoute: false },
+    { label: 'Blog', path: '/blog', isRoute: true },
     { label: 'Contact', path: '#contact', isRoute: false }
   ]);
 

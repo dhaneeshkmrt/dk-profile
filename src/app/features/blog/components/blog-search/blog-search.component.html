@@ -1,0 +1,75 @@
+<div class="blog-search">
+  <div class="search-container" [class.focused]="isFocused()">
+    <!-- Search Icon -->
+    <div class="search-icon">
+      @if (loading) {
+        <div class="search-spinner"></div>
+      } @else {
+        <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+      }
+    </div>
+
+    <!-- Search Input -->
+    <input
+      type="text"
+      class="search-input"
+      [value]="currentSearch()"
+      [placeholder]="placeholder"
+      [disabled]="loading"
+      (input)="onSearchInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (keydown)="onKeyDown($event)"
+      autocomplete="off"
+      spellcheck="false"
+      aria-label="Search blog posts">
+
+    <!-- Clear Button -->
+    @if (hasValue && !loading) {
+      <button
+        type="button"
+        class="clear-button"
+        (click)="onClearSearch()"
+        aria-label="Clear search">
+        <svg class="clear-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    }
+  </div>
+
+  <!-- Search Suggestions -->
+  @if (showSuggestions() && suggestions().length > 0) {
+    <div class="suggestions-container">
+      <ul class="suggestions-list">
+        @for (suggestion of suggestions(); track suggestion) {
+          <li>
+            <button
+              type="button"
+              class="suggestion-item"
+              (click)="onSuggestionClick(suggestion)">
+              <span class="suggestion-icon">🔍</span>
+              <span class="suggestion-text">{{ suggestion }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+
+  <!-- Quick Search Tips -->
+  @if (isFocused() && !hasValue) {
+    <div class="search-tips">
+      <div class="tips-title">Quick search tips:</div>
+      <ul class="tips-list">
+        <li>Try searching for "Angular", "TypeScript", or "Performance"</li>
+        <li>Use quotes for exact matches: "best practices"</li>
+        <li>Search by author, category, or tags</li>
+      </ul>
+    </div>
+  }
+</div>
