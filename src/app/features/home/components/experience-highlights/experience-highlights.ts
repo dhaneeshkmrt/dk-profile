@@ -18,7 +18,7 @@ export class ExperienceHighlightsComponent {
         'Managing 25+ repositories and design system governance',
         'Architecting MyCreditApp platform for enterprise users'
       ],
-      tech: ['Angular 16+', 'Nx Monorepo', 'Design Systems']
+      tech: ['Angular 19', 'Nx Monorepo', 'Design Systems', 'Angular Material' ]
     },
     {
       company: 'Enact Systems',
@@ -29,7 +29,7 @@ export class ExperienceHighlightsComponent {
         'Achieved 75% bundle size reduction',
         'Built white-label solar monitoring platform'
       ],
-      tech: ['Angular 10', 'TypeScript', 'Performance Optimization']
+      tech: ['Angular 15', 'TypeScript', 'Performance Optimization']
     },
     {
       company: 'Epam Systems',

@@ -1,16 +1,13 @@
 import { Component, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-skills-showcase',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   templateUrl: './skills-showcase.html',
   styleUrl: './skills-showcase.scss'
 })
 export class SkillsShowcaseComponent {
-  activeCategory = signal('frontend');
-
   skillCategories = signal([
     {
       id: 'frontend',
@@ -49,12 +46,4 @@ export class SkillsShowcaseComponent {
       ]
     }
   ]);
-
-  setActiveCategory(categoryId: string) {
-    this.activeCategory.set(categoryId);
-  }
-
-  getActiveSkills() {
-    return this.skillCategories().find(cat => cat.id === this.activeCategory())?.skills || [];
-  }
 }
